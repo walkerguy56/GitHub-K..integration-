@@ -1,0 +1,19 @@
+name: Kaggle Workflow
+
+on: [push, pull_request]
+
+jobs:
+  run-kaggle:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Kaggle
+      run: |
+        mkdir -p ~/.kaggle
+        echo "${{ secrets.KAGGLE_KEY }}" > ~/.kaggle/kaggle.json
+        chmod 600 ~/.kaggle/kaggle.json
+
+    - name: Run Kaggle Command
+      run: kaggle competitions list
